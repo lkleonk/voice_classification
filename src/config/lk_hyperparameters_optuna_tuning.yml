@@ -1,0 +1,166 @@
+# permissible formats: 'float', 'int', 'log_float', 'categorical' - see optuna_optimize.py for more information
+# manual: uncomment lines which are supposed to be tuned
+# key: ['value-type', lower bound, upper bound, optional: step size]
+# example: 'cnn.dropout': ['float', 0.1, 0.5, 0.1] # fourth value for step size
+
+#'spectrogram.duration': ['float', 8.0, 11, 1]
+#'spectrogram.duration': ['float', 12, 30, 0.5] # for poem
+"spectrogram.trim_modality": ["categorical", ["start", "middle", "end"]] # 'stretch']] stretch deactivated for now
+#'spectrogram.fmin': ['int', 0, 1000, 100]
+#'spectrogram.fmax': ['int', 5000, 8000, 500]
+#'loss.weighted_loss': ['categorical', [True, False]]
+#'spectrogram.add_chromagram': ['categorical', [True, False]]
+#'spectrogram.add_mfcc': ['categorical', [True, False]]
+#'spectrogram.n_fft': ['categorical', [512, 1024, 2048]]
+#'spectrogram.hop_length': ['int', 360, 512, 128]
+#'spectrogram.n_mels': ['int', 128, 256, 16]
+#'spectrogram.n_mels': ['int', 132, 260, 32] # 190 is the best??
+#'spectrogram.time_mask': ['float', 0.1, 0.4]
+#'spectrogram.freq_mask': ['float', 0.1, 0.4]
+"spectrogram.max_noise_std": ["float", 0.005, 0.02] # zero means no noise augmentation
+#'spectrogram.max_noise_std': ['categorical', [None, 0.01, 0.02, 0.03, 0.05]] #zero means no noise augmentation
+#'spectrogram.normalize': ['categorical', ['none', 'minmax', 'standard']] # not implemented
+#'features.demographic_data_mode': ['categorical', ['only_bmi', 'all_data', 'no_bmi']]
+#'features.add_acoustic_feature': ['categorical', [True, False]]
+#'spectrogram.norm': ['categorical', ['minmax_0_1', 'minmax_-1_1']]
+"optimizer.weight_decay": ["categorical", [1e-3, 1e-4, 1e-5]]
+"scheduler.eta_min": ["categorical", [1e-7, 1e-6, 1e-5]]
+
+"test_cnn.lr": ["log_float", 0.00001, 0.001]
+
+"test_cnn2.lr": ["log_float", 0.00001, 0.001]
+
+"tabular_mlp.lr": ["log_float", 0.00001, 0.001]
+"tabular_mlp.batch_size": ["int", 32, 96, 2]
+"tabular_mlp.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"cnn.lr": ["log_float", 0.00001, 0.001]
+#'cnn.eta_min'
+#'cnn.beta1': ['float', 0.6, 0.92]
+#'cnn.beta2': ['float', 0.8, 0.95]
+"cnn.batch_size": ["int", 32, 96, 2]
+"cnn.layer_dropout": ["float", 0.1, 0.4, 0.1]
+#'cnn.final_dropout': ['float', 0.1, 0.4, 0.1]
+"cnn.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+#'cnn_gap.lr': ['log_float', 0.00001, 0.001]
+#'cnn_gap.beta1': ['float', 0.6, 0.92]
+#'cnn_gap.beta2': ['float', 0.8, 0.95]
+"cnn_gap.batch_size": ["int", 32, 96, 2]
+#'cnn_gap.dropout': ['float', 0.1, 0.5, 0.1]
+#'cnn_gap.layer_dropout': ['float', 0.1, 0.4]
+#'cnn_gap.final_dropout': ['float', 0.1, 0.4, 0.1]
+#'cnn_gap.mlp_layer_sizes': ['categorical', ['32', '64', '128', '128, 64', '256, 128', '256, 128, 64']]
+
+"cnn_large.lr": ["log_float", 0.00001, 0.001]
+#'cnn_large.beta1': ['float', 0.6, 0.92]
+#'cnn_large.beta2': ['float', 0.8, 0.95]
+"cnn_large.batch_size": ["int", 32, 96, 2]
+#'cnn_large.dropout': ['float', 0.1, 0.5, 0.1]
+"cnn_large.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"lstm.lr": ["log_float", 0.00001, 0.001]
+#'lstm.beta1': ['float', 0.6, 0.92]
+#'lstm.beta2': ['float', 0.8, 0.95]
+"lstm.batch_size": ["int", 32, 96, 2]
+"lstm.layer_dropout": ["float", 0.05, 0.3]
+"lstm.final_dropout": ["float", 0.05, 0.3]
+"lstm.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+"lstm.lstm_cell_sizes":
+  [
+    "categorical",
+    [
+      "256, 128, 64",
+      "512, 256, 128",
+      "512, 256, 128, 128",
+      "1024, 512, 256, 128",
+    ],
+  ]
+
+"cnnlstm.lr": ["log_float", 0.00001, 0.001]
+#'cnnlstm.beta1': ['float', 0.6, 0.92]
+#'cnnlstm.beta2': ['float', 0.8, 0.95]
+"cnnlstm.batch_size": ["int", 32, 96, 2]
+"cnnlstm.cnn_layer_dropout": ["float", 0.1, 0.4]
+"cnnlstm.lstm_layer_dropout": ["float", 0.1, 0.4]
+#'cnnlstm.final_dropout': ['float', 0.1, 0.4, 0.1]
+"cnnlstm.cnn_layer_sizes": ["categorical", ["32, 64", "32, 48, 64"]] # 64x
+"cnnlstm.lstm_cell_sizes": [
+    "categorical",
+    ["128, 64", "256, 128", "256, 128, 64"],
+  ] #, [512, 256, 128]]]
+"cnnlstm.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+"cnnlstm.bidirectional_lstm": ["categorical", [True, False]]
+
+vit.lr: ["log_float", 0.00001, 0.001]
+#vit.patch_size: ['int', 16, 32, 16]
+#vit.emb_dim: ['int', 64, 256, 64]
+#vit.depth: ['int', 2, 6, 1]
+#vit.num_heads: ['int', 2, 4, 2]
+#vit.mlp_ratio: ['int', 2, 4, 1]
+#vit.layer_dropout: ['float', 0.1, 0.5, 0.1]
+vit.final_dropout: ["float", 0.1, 0.5, 0.1]
+"vit.batch_size": ["int", 32, 96, 2]
+#vit.beta1: ['float', 0.85, 0.95]
+#vit.beta2: ['float', 0.9, 0.999]
+"vit.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"autoencoder.lr": ["log_float", 0.00001, 0.001]
+#'autoencoder.beta1': ['float', 0.6, 0.95]
+#'autoencoder.beta2': ['float', 0.6, 0.99]
+
+"pann.lr": ["log_float", 0.000001, 0.001]
+#'pann.beta1': ['float', 0.6, 0.92]
+#'pann.beta2': ['float', 0.8, 0.95]
+"pann.batch_size": ["int", 32, 96, 2]
+#'pann.final_dropout': ['float', 0.1, 0.5, 0.1]
+"pann.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"passt.lr": ["log_float", 0.000001, 0.001]
+#'passt.beta1': ['float', 0.6, 0.92]
+#'passt.beta2': ['float', 0.8, 0.95]
+"passt.batch_size": ["int", 32, 96, 2]
+#'passt.final_dropout': ['float', 0.1, 0.5, 0.1]
+"passt.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"efficientat.lr": ["log_float", 0.000001, 0.001]
+#'efficientat.beta1': ['float', 0.6, 0.92]
+#'efficientat.beta2': ['float', 0.8, 0.95]
+"efficientat.batch_size": ["int", 32, 96, 2]
+#'efficientat.final_dropout': ['float', 0.1, 0.5, 0.1]
+"efficientat.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"ast.lr": ["log_float", 0.000001, 0.001]
+#'ast.beta1': ['float', 0.6, 0.92]
+#'ast.beta2': ['float', 0.8, 0.95]
+"ast.batch_size": ["int", 32, 96, 2]
+#'ast.final_dropout': ['float', 0.1, 0.5, 0.1]
+"ast.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+
+"wav2vec2.lr": ["log_float", 0.000001, 0.001]
+#'wav2vec2.beta1': ['float', 0.6, 0.92]
+#'wav2vec2.beta2': ['float', 0.8, 0.95]
+"wav2vec2.batch_size": ["int", 32, 96, 2]
+#'wav2vec2.final_dropout': ['float', 0.1, 0.5, 0.1]
+"wav2vec2.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]
+"wav2vec2.append_std": ["categorical", [False, True]]
+#"wav2vec2.wav2vec2_layer_size": ["categorical", [0, 4, 8, 12, 16, 20, 24]]
+
+"vggish.lr": ["log_float", 0.00001, 0.001]
+#'vggish.beta1': ['float', 0.6, 0.92]
+#'vggish.beta2': ['float', 0.8, 0.95]
+"vggish.batch_size": ["int", 32, 96, 2]
+#'vggish.final_dropout': ['float', 0.1, 0.5, 0.1]
+"vggish.mlp_layer_sizes":
+  ["categorical", ["32", "64", "128", "128, 64", "256, 128", "256, 128, 64"]]

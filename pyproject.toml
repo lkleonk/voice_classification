@@ -1,0 +1,54 @@
+[project]
+name = "voice-classification"
+version = "0.1.0"
+description = "Detect lung condition via voice biomarkers"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = "Apache-2.0"
+license-files = [
+    "LICENSE",
+    "src/model/efficientat/EfficientAT/LICENSE",
+]
+dependencies = [
+    "grad-cam>=1.5.5",
+    "hear21passt>=0.0.26",
+    "librosa>=0.11",
+    "matplotlib>=3.10.0",
+    "mlflow>=3.3.2",
+    "openpyxl>=3.1.5",
+    "optuna>=3.6.1",
+    "pandas>=2.2.3",
+    "pillow>=10.0.1",
+    "plotly>=5.24.1",
+    "pywavelets>=1.8.0",
+    "reportlab>=4.4.3",
+    "scikit-learn<1.6",
+    "seaborn>=0.13.2",
+    "soundfile>=0.13.1",
+    "speechbrain>=1.0.3",
+    "tenacity>=9.0.0",
+    "torch>=2.8,<2.9",
+    "torchaudio>=2.8,<2.9",
+    "torchlibrosa>=0.1.0",
+    "torchvision>=0.20.1",
+    "transformers>=4.47.1",
+]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.135.10",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.6.0",
+    "pytest-xdist>=3.0.0",
+]
+
+[tool.pyright]
+include = ["src"]
+extraPaths = ["."]
+
+[tool.ruff]
+fix = true
+
+[tool.ruff.lint]
+select = ["UP"]

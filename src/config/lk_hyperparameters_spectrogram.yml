@@ -1,0 +1,254 @@
+
+#spectrogram: # access via for example: config['spectrogram']['sample_rate']
+spectrogram.sample_rate: 16000 #22050
+spectrogram.n_mels: 128 #128 # 132 so as to fit in the ViT
+spectrogram.n_fft: 2048 # 2048 and 128 n_mels is also used by hierarchital transformer model https://pmc.ncbi.nlm.nih.gov/articles/PMC11658170/pdf/nihms-1972915.pdf
+spectrogram.hop_length: 344
+spectrogram.fmin: 50
+spectrogram.fmax: 6000
+spectrogram.duration: 10 # 11 #10 #16 #5.0 -1 is variable: only suited for lstm
+spectrogram.trim_modality: end #"middle" # end # end seems to be the best
+#spectrogram.target_shape: wrong - get rid of height - already done in n_mels - also of width bcs that is in hop_lengt + duration + sample_rate[116, 512] # also feasible for vit: [132, 512]#[128, 512] #[192, 320]
+spectrogram.freq_mask: 0.3 #0.3 #0.13 #0.3 #0.2 recommended: 0.25
+spectrogram.time_mask: 0.2 #0.3 #0.2 #0.15 #0.2      recommended: 0.25
+spectrogram.max_noise_std: 0.01 # 0.005–0.02 # std stands for standard deviation, which measures the “strength” or amplitude of the Gaussian noise that is added to the waveform
+spectrogram.norm: minmax_0_1 # minmax_-1_1
+waveform.norm: minmax_0_1 # normalization for raw-waveform models that skip spectrogram creation
+spectrogram.add_chromagram: False
+spectrogram.add_mfcc: False
+spectrogram.add_delta_mfcc: False
+features.norm: minmax_0_1 # demographic/tabular feature scaling; valid: minmax_0_1 | minmax_-1_1
+features.add_acoustic_feature: False
+loss.weighted_loss: True
+features.extra_demographic_data_mlp: True
+features.extra_demographic_data_mlp_dropout: 0.1
+features.demographic_data_mode: 'all_data' #'only_bmi' # 'all_data' 'no_bmi'  only aplicable to newer dataset
+optimizer.weight_decay: 1e-4
+scheduler.eta_min: 1e-6
+# model.xavier_norm:
+
+cnn.layer_dropout: 0.2 # this is used about 3 times in the model
+cnn.final_dropout: 0.5
+cnn.batch_size: 64
+cnn.beta1: 0.9
+cnn.beta2: 0.999
+cnn.lr: 0.00017
+# cnn.#  spec_std_mean_normalize: False # whether to normalize with transforms.Normalize(mean=[0.5], std=[0.5]))
+cnn.lr_decay: True
+cnn.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+cnn.cnn_layer_sizes: '32, 64'
+cnn.mlp_layer_sizes: '128, 64' #[128] #
+cnn.fully_pretrained_model_file_name: null
+
+
+cnn_large.layer_dropout: 0.2 # this is used about 3 times in the model
+cnn_large.final_dropout: 0.5
+cnn_large.batch_size: 64
+cnn_large.beta1: 0.9
+cnn_large.beta2: 0.999
+cnn_large.lr: 0.00017
+cnn_large.lr_decay: True
+cnn_large.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+cnn_large.mlp_layer_sizes: '128, 64' #[128] #
+cnn_large.fully_pretrained_model_file_name: null
+
+
+cnn_gap.layer_dropout: 0.2 # this is used about 3 times in the model
+cnn_gap.final_dropout: 0.5
+cnn_gap.batch_size: 64
+cnn_gap.layer_dropout: 0.2 # this is used about 3 times in the model
+cnn_gap.final_dropout: 0.5
+cnn_gap.beta1: 0.9
+cnn_gap.beta2: 0.999
+cnn_gap.lr: 0.00017
+cnn_gap.lr_decay: True
+cnn_gap.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+cnn_gap.mlp_layer_sizes: '128, 64, 32' #[128] #
+cnn_gap.fully_pretrained_model_file_name: null
+
+
+test_cnn.dropout: 0.5
+test_cnn.input_dropout: 0.2
+test_cnn.batch_size: 64
+test_cnn.beta1: 0.9
+test_cnn.beta2: 0.999
+test_cnn.lr: 0.00017
+test_cnn.mlp_layer_sizes: '128, 64' #[128] #
+test_cnn.lr_decay: True
+test_cnn.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+test_cnn.fully_pretrained_model_file_name: null #norm_off_TEST_run_pretrained_test_cnn_11-22_a_final_model_0epochs_2025-11-22_17-00_0500v_0500t.pt #norm_off_TEST_run_test_cnn_10-27_a_best_model_0epochs_2025-10-27_13-37_0500v_0500t.pt ## norm_off_TEST_run_test_cnn_10-23_a_final_model_0epochs_2025-10-23_21-15_0500v_0500t.pt #null
+
+test_cnn2.dropout: 0.5
+test_cnn2.input_dropout: 0.2
+test_cnn2.batch_size: 64
+test_cnn2.beta1: 0.9
+test_cnn2.beta2: 0.999
+test_cnn2.lr: 0.00017
+test_cnn2.mlp_layer_sizes: '128, 64' #[128] #
+test_cnn2.lr_decay: True
+test_cnn2.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+test_cnn2.fully_pretrained_model_file_name: null #norm_off_TEST_run_pretrained_test_cnn_11-22_a_final_model_0epochs_2025-11-22_17-00_0500v_0500t.pt #norm_off_TEST_run_test_cnn_10-27_a_best_model_0epochs_2025-10-27_13-37_0500v_0500t.pt ## norm_off_TEST_run_test_cnn_10-23_a_final_model_0epochs_2025-10-23_21-15_0500v_0500t.pt #null
+
+
+
+
+# tabular_mlp: MLP over demographic/tabular features only
+tabular_mlp.batch_size: 64
+tabular_mlp.beta1: 0.9
+tabular_mlp.beta2: 0.999
+tabular_mlp.lr: 0.00017
+tabular_mlp.lr_decay: True
+tabular_mlp.lr_decay_type: 'cosine_annealing_w_lr_decay'
+tabular_mlp.mlp_layer_sizes: '128, 64'
+tabular_mlp.final_dropout: 0.2
+tabular_mlp.fully_pretrained_model_file_name: null
+
+
+lstm.layer_dropout: 0.15 # very high values seem to work#0.27
+lstm.final_dropout: 0.3 #0.1
+lstm.batch_size: 64
+lstm.beta1: 0.9
+lstm.beta2: 0.999 # normally beta2 is bigger than beta1
+lstm.lr:  0.0006510973546310232 #0.00034420534858445914 #0.00032588858033037255 #0.00017
+lstm.lr_decay: True
+lstm.lstm_cell_sizes: '512, 256, 128, 128'
+lstm.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+lstm.mlp_layer_sizes: '128, 64' #[128] #
+lstm.fully_pretrained_model_file_name: null
+lstm.bidirectional_lstm: False
+
+
+
+cnnlstm.lstm_layer_dropout: 0.2 # this is used after every lstm cell
+cnnlstm.cnn_layer_dropout: 0.1
+cnnlstm.final_dropout: 0.5
+cnnlstm.batch_size: 64
+cnnlstm.beta1: 0.9
+cnnlstm.beta2: 0.999
+cnnlstm.lr: 0.00017
+cnnlstm.lr_decay: True
+cnnlstm.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+cnnlstm.cnn_layer_sizes: '32, 64'
+cnnlstm.lstm_cell_sizes: '256, 128'
+cnnlstm.mlp_layer_sizes: '128, 64' #[128] #
+cnnlstm.bidirectional_lstm: False
+cnnlstm.fully_pretrained_model_file_name:  null # norm_off_TEST_run_cnnlstm_11-15_a_final_model_0epochs_2025-11-15_17-41_0500v_0500t.pt # null
+
+
+vit.patch_size: 16
+vit.emb_dim: 64 # small emb_dim seems to work out best 128 # 128
+vit.depth: 3  # seems to work  - or 4
+vit.num_heads: 4
+vit.mlp_ratio: 4
+vit.layer_dropout: 0.2
+vit.final_dropout: 0.35    # min 0.3 final_dropout is good
+vit.batch_size: 64
+vit.beta1: 0.9
+vit.beta2: 0.999 # normally beta2 is bigger than beta1
+vit.lr:  0.00034420534858445914 #0.00032588858033037255 #0.00017
+vit.lr_decay: True
+vit.lr_decay_type: 'cosine_annealing_w_lr_decay' # 'custom_lr'
+vit.mlp_layer_sizes: '128, 64' #[128] #
+vit.early_fusion_add_extra_data: True
+vit.late_fusion_add_extra_data: False
+vit.fully_pretrained_model_file_name: null
+
+
+
+pann.unfreeze_last_layers: 0
+pann.batch_size: 64
+pann.beta1: 0.9
+pann.beta2: 0.999 #0.9467763654957473
+pann.lr:  0.0002988126878968475 #0.00017
+pann.lr_decay: True
+pann.lr_decay_type: 'cosine_annealing_w_lr_decay' #
+pann.mlp_layer_sizes: '128, 64' #[128] #
+pann.final_dropout: 0.2
+pann.fully_pretrained_model_file_name: null # norm_on_pann_11-20_a_final_model_19epochs_2025-11-20_23-40_0750v_0771t.pt
+#null #norm_off_pann_10-26_poem_final_model_27epochs_2025-10-26_01-55_0688v_0812t_only_clfs.pt #null #norm_off_TEST_run_pann_10-23_a_final_model_0epochs_2025-10-23_20-53_0500v_0500tonly_clfs.pt ##null #norm_on_pann_10-12_o_model_8epochs_2025-10-12_06-52_0748v_0561t.pt
+
+
+
+passt.unfreeze_last_layers: 0
+passt.batch_size: 64
+passt.beta1: 0.9
+passt.beta2: 0.999 #0.9467763654957473
+passt.lr:  0.0002988126878968475 #0.00017
+passt.lr_decay: True
+passt.lr_decay_type: 'cosine_annealing_w_lr_decay'
+passt.mlp_layer_sizes: '128, 64' #[128]
+passt.final_dropout: 0.2
+passt.fully_pretrained_model_file_name: null
+
+
+
+efficientat.unfreeze_last_layers: 0
+efficientat.batch_size: 64
+efficientat.beta1: 0.9
+efficientat.beta2: 0.999 #0.9467763654957473
+efficientat.lr:  0.0002988126878968475 #0.00017
+efficientat.lr_decay: True
+efficientat.lr_decay_type: 'cosine_annealing_w_lr_decay'
+efficientat.mlp_layer_sizes: '128, 64' #[128]
+efficientat.final_dropout: 0.2
+efficientat.fully_pretrained_model_file_name: null
+
+ast.unfreeze_last_layers: 0
+ast.batch_size: 64
+ast.beta1: 0.9
+ast.beta2: 0.999
+ast.lr: 0.0002988126878968475
+ast.lr_decay: True
+ast.lr_decay_type: 'cosine_annealing_w_lr_decay'
+ast.mlp_layer_sizes: '128, 64'
+ast.final_dropout: 0.2
+ast.fully_pretrained_model_file_name: null
+
+wav2vec2.wav2vec2_layer_size: 4
+wav2vec2.unfreeze_last_layers: 0
+wav2vec2.batch_size: 64
+wav2vec2.beta1: 0.9
+wav2vec2.beta2: 0.999
+wav2vec2.lr: 0.0002988126878968475
+wav2vec2.lr_decay: True
+wav2vec2.lr_decay_type: 'cosine_annealing_w_lr_decay'
+wav2vec2.mlp_layer_sizes: '128, 64'
+wav2vec2.final_dropout: 0.2
+wav2vec2.fully_pretrained_model_file_name: null
+wav2vec2.append_std: False
+
+
+
+
+vggish: # need 96 x 64 image input siize
+vggish.unfreeze_last_layers: 0
+vggish.batch_size: 64
+vggish.beta1: 0.9
+vggish.beta2: 0.999 #0.9467763654957473
+vggish.lr:  0.0002988126878968475 #0.00017
+vggish.lr_decay: True
+vggish.lr_decay_type: 'cosine_annealing_w_lr_decay'
+vggish.mlp_layer_sizes: '128, 64' #[128] #
+vggish.final_dropout: 0.1
+vggish.fully_pretrained_model_file_name: null
+
+
+#activation_function: relu
+autoencoder.batch_size: 1
+autoencoder.beta1: 0.9
+autoencoder.beta2: 0.999 #0.9467763654957473
+autoencoder.lr:  0.0002988126878968475 #0.00017
+autoencoder.lr_decay: True
+autoencoder.lr_decay_type: 'custom_lr' #'cosine_annealing_w_lr_decay' #
+autoencoder.fully_pretrained_model_file_name: null
+
+beats.unfreeze_last_layers: 0
+beats.batch_size: 64
+beats.beta1: 0.9
+beats.beta2: 0.999 #0.9467763654957473
+beats.lr:  0.0002988126878968475 #0.00017
+beats.lr_decay: True
+beats.lr_decay_type: 'cosine_annealing_w_lr_decay'
+beats.mlp_layer_sizes: '128, 64' #[128]
+beats.final_dropout: 0.2
+beats.fully_pretrained_model_file_name: null
